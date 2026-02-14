@@ -24,7 +24,7 @@ pipeline {
       steps {
         script {
           withSonarQubeEnv('SonarQube-Server') {
-            withCredentials([string(credentialsId: 'SonarQube-Token', variable: 'SONAR_TOKEN')]) {
+            withCredentials([string(credentialsId: 'token-for-jenkins', variable: 'SONAR_TOKEN')]) {
               sh '''
                 java -version
                 JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64 \
@@ -33,7 +33,7 @@ pipeline {
                 -Dsonar.host.url=http://localhost:9000 \
                 -Dsonar.projectKey=nodejs-app \
                 -Dsonar.sources=. \
-                -Dsonar.token=$SONAR_TOKEN
+                -Dsonar.login=$SONAR_TOKEN
               '''
             }
           }
@@ -43,7 +43,7 @@ pipeline {
     stage('Quality Gate') {
       steps {
         timeout(time: 1, unit: 'MINUTES') {
-          waitForQualityGate abortPipeline: false, credentialsId: 'SonarQube-Token'
+          waitForQualityGate abortPipeline: false, credentialsId: 'token-for-jenkins'
         }
       }
     }
