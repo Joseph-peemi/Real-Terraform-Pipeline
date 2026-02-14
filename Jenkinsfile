@@ -7,7 +7,6 @@ pipeline {
   environment {
     SCANNER_HOME = tool 'sonarqube-scanner'
     JAVA_HOME = tool 'jdk17'
-    PATH = "${JAVA_HOME}/bin:${env.PATH}"
   }
   stages {
     stage('clean workspace') {
