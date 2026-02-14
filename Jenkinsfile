@@ -5,7 +5,7 @@ pipeline {
     nodejs 'node16'
   }
   environment {
-    SONARQUBE_HOME = 'SonarQube-Server'
+    SCANNER_HOME = tool 'sonarqube-scanner'
   }
   stages {
     stage('clean workspace') {
@@ -24,7 +24,7 @@ pipeline {
           withSonarQubeEnv('SonarQube-Server') {
             withCredentials([string(credentialsId: 'SonarQube-Token', variable: 'SONAR_TOKEN')]) {
               sh '''
-                sonar-scanner \
+                $SCANNER_HOME/bin/sonar-scanner \
                 -Dsonar.projectKey=nodejs-app \
                 -Dsonar.sources=. \
                 -Dsonar.host.url=http://172.31.41.220:9000 \
