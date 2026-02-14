@@ -6,8 +6,8 @@ pipeline {
   }
   environment {
     SCANNER_HOME = tool 'sonarqube-scanner'
-    JAVA_HOME = '/var/lib/jenkins/tools/hudson.model.JDK/jdk17'
-    PATH = "${JAVA_HOME}/bin:${env.PATH}"
+    JAVA_HOME = '/usr/lib/jvm/java-17-openjdk-amd64'
+    PATH = "${JAVA_HOME}/bin:${PATH}"
   }
   stages {
     stage('clean workspace') {
@@ -27,7 +27,7 @@ pipeline {
             withCredentials([string(credentialsId: 'SonarQube-Token', variable: 'SONAR_TOKEN')]) {
               sh '''
                 java -version
-                JAVA_HOME=/var/lib/jenkins/tools/hudson.model.JDK/jdk17 \
+                JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64 \
                 PATH=$JAVA_HOME/bin:$PATH \
                 $SCANNER_HOME/bin/sonar-scanner \
                 -Dsonar.projectKey=nodejs-app \
