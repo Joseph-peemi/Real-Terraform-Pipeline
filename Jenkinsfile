@@ -30,9 +30,9 @@ pipeline {
                 JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64 \
                 PATH=$JAVA_HOME/bin:$PATH \
                 $SCANNER_HOME/bin/sonar-scanner \
+                -Dsonar.host.url=http://localhost:9000 \
                 -Dsonar.projectKey=nodejs-app \
                 -Dsonar.sources=. \
-                -Dsonar.host.url=http://localhost:9000 \
                 -Dsonar.token=$SONAR_TOKEN
               '''
             }
