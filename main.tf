@@ -1,9 +1,8 @@
 resource "aws_instance" "web" {
-  ami                    = "ami-0b6c6ebed2801a5cb"
+  ami                    = "ami-0e2c8caa4b6378d8c"
   instance_type          = "c7i-flex.large"
   key_name               = "Linux-VM-Key7"
   vpc_security_group_ids = [aws_security_group.Jenkins-VM-SG.id]
-  user_data              = templatefile("./install.sh", {})
 
   tags = {
     Name = "Jenkins-SonarQube"
@@ -20,6 +19,7 @@ resource "aws_security_group" "Jenkins-VM-SG" {
 
   ingress = [
     for port in [22, 80, 443, 8080, 9000, 3000] : {
+      description      = "Allow inbound traffic on port ${port}"
       from_port        = port
       to_port          = port
       protocol         = "tcp"
