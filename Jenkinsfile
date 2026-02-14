@@ -5,8 +5,8 @@ pipeline {
     nodejs 'node16'
   }
   environment {
-    SCANNER_HOME = tool 'sonarqube-scanner'
-    JAVA_HOME = tool 'jdk17'
+    JAVA_HOME = '/var/lib/jenkins/tools/hudson.model.JDK/jdk17'
+    PATH = "${JAVA_HOME}/bin:${PATH}"
   }
   stages {
     stage('clean workspace') {
@@ -25,8 +25,8 @@ pipeline {
           withSonarQubeEnv('SonarQube-Server') {
             withCredentials([string(credentialsId: 'SonarQube-Token', variable: 'SONAR_TOKEN')]) {
               sh '''
-                export PATH=$JAVA_HOME/bin:$PATH
-                $SCANNER_HOME/bin/sonar-scanner \
+                java -version
+                sonar-scanner \
                 -Dsonar.projectKey=nodejs-app \
                 -Dsonar.sources=. \
                 -Dsonar.host.url=http://172.31.41.220:9000 \
