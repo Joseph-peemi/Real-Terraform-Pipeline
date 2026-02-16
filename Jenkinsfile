@@ -24,7 +24,7 @@ pipeline {
       steps {
         script {
           withSonarQubeEnv('SonarQube-Server') {
-            withCredentials([string(credentialsId: 'token-for-jenkins', variable: 'SONAR_TOKEN')]) {
+            withCredentials([string(credentialsId: 'Sonarqube-token', variable: 'SONAR_TOKEN')]) {
               sh '''
                 java -version
                 JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64 \
@@ -43,7 +43,7 @@ pipeline {
     stage('Quality Gate') {
       steps {
         timeout(time: 1, unit: 'MINUTES') {
-          waitForQualityGate abortPipeline: false, credentialsId: 'token-for-jenkins'
+          waitForQualityGate abortPipeline: false, credentialsId: 'Sonarqube-token'
         }
       }
     }

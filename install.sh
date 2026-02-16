@@ -1,0 +1,6 @@
+#!/bin/bash
+docker pull sonarqube:9.9-community
+docker run -d --name sonar \
+  -p 9000:9000 \
+  -e SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true \
+  sonarqube:9.9-community
